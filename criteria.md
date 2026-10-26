@@ -55,11 +55,11 @@ whether you hit them:
 
 <!-- Your criterion. It must name a number. -->
 
-
+Counted once, on the final set of 200 labelled posts and before any training, no single label makes up more than 40% of the posts (80 or fewer) and no label makes up less than 10% (20 or more). If any one of the four labels falls outside that range, the criterion is missed.
 
 **Why this target:**
 
-
+With four labels an even split is 25% each. A label above 40% means a model that always guesses it scores 40% without learning anything, and training would lean toward it. A label below 10% is 20 posts, which leaves about 3 in the test split (15%), too few for an F1. My smallest label, [label], has [N] posts.
 
 ---
 
@@ -67,11 +67,12 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
+On each of the three seeds, every label has an F1 of at least 0.65 on the held-out test split, except the smallest label, which needs at least 0.50. F1 is computed per label from precision and recall on the test posts. If any label is below its number on any seed, the criterion is missed.
 
 
 **Why this target:**
 
-
+Four labels means guessing gets about 25%, so an F1 of 0.65 is well above chance. I set it below the 0.75 in criterion 5 because the worst label is always below the overall average. The smallest label, [label], has only about [N] test posts out of about 30, so one post can move its F1 by 15 points or more. I set it looser, at 0.50, for that reason. Opinion and advice overlap, so I expect them to be the closest calls.
 
 ---
 
@@ -79,11 +80,11 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
-
+Across the three seeds, I take the highest overall accuracy on the held-out test split minus the lowest. That difference is no more than 0.10. If it is larger than 0.10, the criterion is missed.
 
 **Why this target:**
 
-
+A model that scores 0.80 on one seed and 0.65 on another can't be trusted to score either number next time. The seed changes both training and which posts land in the test split, so some of the gap comes from the split and not the model. One post is worth about 3 points on a test split of about 30 posts (15% of 200), so a gap of 0.10 is about three posts. I did not go tighter because that would mostly measure luck in the split. Criterion 5 sets the level of accuracy. This one checks that the level holds from run to run.
 
 ---
 
@@ -91,22 +92,25 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
+On 10 new posts that I label myself and that are not among the 200 labelled posts, the model labels at least 8 correctly on each of the three seeds. If any one seed gets 7 or fewer right, the criterion is missed.
 
 
 **Why this target:**
 
-
+All my posts come from one forum, so this does not test a different community. It does test posts that were never in my 200, which guards against a split that shares near-duplicates or a quirk of when I collected. I label the ten before the model runs so I cannot bend a label toward its answer. I set 8 of 10 because it is the nearest whole number to the 0.75 in criterion 5 and allows two misses. Ten posts is too few to separate 0.70 from 0.85, so this is a sanity check, and criterion 5 is the precise measurement.
 
 ---
 
 ## 5.
 
 <!-- Your criterion. -->
+Overall accuracy on the held-out test split (about 30 of the 200 labelled posts) is at least 0.75 on each of the three seeds. If any one seed falls below 0.75, the criterion is missed.
+
 
 
 
 **Why this target:**
-
+I have four labels, so guessing gets about 25%. 0.75 is three times that, which I would call useful for sorting posts. On about 30 test posts, 0.75 means getting about 23 right, and one seed with 22 right (0.73) is a miss. Because it has to hold on all three seeds, I did not set it higher. Opinion and advice overlap, so I expect most errors there.
 
 
 ---
