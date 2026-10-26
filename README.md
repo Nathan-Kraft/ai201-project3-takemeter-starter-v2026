@@ -54,33 +54,64 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `question`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** Asking for information or help of any kind.
 
 **Example 1:**
->
+>“Hello [user], I have a spare Pioneer drive, is it possible to flash this for 4k?”
 
 **Example 2:**
->
+>“The buffalo burner has been discontinued. (Days before I bought one) What’s next?”
+
+### `opinion`
+
+**Definition:** States a general claim about drives, vendors or the market, with little or no support.
+
+**Example 1:**
+>“Crossflashing is not possible for this drive.”
+
+**Example 2:**
+>“This is a great release, and we should all be glad someone released their software for free!”
+
+### `advice`
+
+**Definition:** Tells someone what to do or not to do, as a single suggestion or as a series of steps.
+
+**Example 1:**
+>“Do not use MakeMKV v2.0.0. Install v1.18.4 and yes, extract the files before running the flasher.”
+
+**Example 2:**
+>“The important part is what your drive’s BIOS says about its software. If it was flashed recently, it may be locked out. That’s why posting your drive information is important.”
+
+### `report`
+
+**Definition:** Describes what happened to the writer, success or failure, without asking for anything.
+
+**Example 1:**
+>“Worked flawlessly, thank you [user]!”
+
+**Example 2:**
+>“Okay, I washed the disc with water mixed with dish soap and carefully cleaned it using a microfiber cloth, avoiding circular motions. Unfortunately, the PC still doesn’t recognize the disc.”
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `advice` and `report`
 
-**The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
+**The decision rule I used every time:** If the post tells the reader to do
+something, it's `advice`, even if it also describes what happened to the writer. If it only describes what happened and asks and recommends nothing, it's `report`.
+
+A second rule that always applies first: if the post asks for anything, it's `question`, however much of it describes what happened.
+
+A third rule: a plain statement about a drive, vendor or the market, with no event from the writer's own experience, is `opinion`, even when it is probably true.
+
+
+### Posts that get no label
+
+Posts with no question, claim, event or recommendation are skipped and not put in `labels.csv`. That covers thanks with nothing else, "PM sent.", bumps, ads, and posts that are
+only a pasted drive readout. If a post has a readout plus real text, I keep the
+text and delete the readout. I counted the skipped posts so I can report them in
+The Dataset.
 
 
 
@@ -92,9 +123,11 @@
      cases. -->
 
 **Where the posts came from:**
+All the posts came from the MakeMKV forums. 
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
+For 20 posts I labeled them cold, then had claude check them over against my rules for a second opinion. I agreed with its changes after discussing them. For the rest of them I had claude run through and label them. 
 
 **Counts per label:**
 
@@ -110,26 +143,36 @@ Say so plainly — the disclosure is required, not penalised. -->
 <!-- Any post that made you pause: what it was, which two labels it could have
      been, and what you chose. These are worth more than the easy 190. -->
 
-**1.**
+**1. (third rule: opinion vs. report)**
 > *The post:*
+> "Crossflashing is not possible for this drive."
 >
 > *Could have been:*
+> `report` or `opinion`
 >
-> *I chose, because:*
+> *I chose `opinion`, because:*
+> It states a claim about a drive, not an event in the writer's experience.
+> Nothing in the post says the writer tried it.
 
-**2.**
+**2. (second rule: question vs. advice)**
 > *The post:*
+> "Would you be willing to backup your UD02 firmware and upload it to say Google drive? Your firmware could then be used to rescue misflashed UD02 drives. A new free firmware flasher is avaialble since a couple of days. Just need to know on which OS you are."
 >
 > *Could have been:*
+> `question` or `advice`
 >
-> *I chose, because:*
+> *I chose `question`, because:*
+> I first labelled it `advice`, then changed it after checking my own rules. It asks the reader to do something for the writer, and my second rule says any ask makes it `question`. The flasher notice is a recommendation, but the ask comes first and the rule applies first.
 
-**3.**
+**3. (first rule: advice vs. report)**
 > *The post:*
+> "I ended up successfully flashing the drive by running the commands [user] posted in a terminal." [...] "At some point it'd be nice if someone could add information about the SDFtool Flasher to the main UHD flashing guide thread. Then on the tool's page, maybe put what seems an unusual requirement of 1st installing an older MM version in a red font." [...] "Thanks for everyone's help getting all this sorted!"
 >
 > *Could have been:*
+> `report` or `advice`
 >
-> *I chose, because:*
+> *I chose `advice`, because:*
+> I first labelled it `report`, because nearly all of it describes what happened to the writer. Then I checked it against my decision rule, which says a post that recommends anything is `advice`, even if it also describes what happened. The post suggests changes to the guide and the tool page, so it recommends something. The suggestion is aimed at the guide's maintainers, not the reader, so `report` is defensible. I kept the rule as written and chose `advice`.
 
 ---
 

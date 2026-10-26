@@ -5,6 +5,8 @@
 #
 # Delete the examples below and put yours in.
 
-analysis: makes an argument backed by a specific, checkable fact
-hot_take: a confident claim with no support offered
-reaction: an immediate response to something that just happened
+question: Asking for information or help of any kind.
+opinion: States a general claim about drives, vendors or the market, with little or no support.
+advice: Tells someone what to do or not to do, as a single suggestion or as a series of steps.
+report: Describes what happened to the writer, success or failure, without asking for anything.
+
