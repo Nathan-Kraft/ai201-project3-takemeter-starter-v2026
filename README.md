@@ -191,6 +191,21 @@ split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
 Using seed 42, the split is 154 train / 33 validation / 33 test. The test split contains `advice` 9, `opinion` 6, `question` 10, and `report` 8. `opinion` has only 6 test examples, so its F1 may vary substantially across seeds.
 
+### Second training run
+
+For a second run, I changed only the number of epochs from 3 to 4. The learning rate, batch size, seed, model, maximum sequence length, dataset, and split stayed the same.
+
+| Measure | First run | Second run | Change |
+|---|---:|---:|---:|
+| Overall accuracy | 0.455 | 0.455 | 0.000 |
+| Macro F1 | 0.310 | 0.310 | 0.000 |
+| F1 - `question` | 0.526 | 0.526 | 0.000 |
+| F1 - `advice` | 0.714 | 0.714 | 0.000 |
+| F1 - `opinion` | 0.000 | 0.000 | 0.000 |
+| F1 - `report` | 0.000 | 0.000 | 0.000 |
+
+The accuracy, macro F1, and per-label F1 scores did not move. The confidence metrics did change: mean confidence when correct increased from 0.324 to 0.348, mean confidence when wrong increased from 0.320 to 0.339, and least-confident-third accuracy decreased from 0.455 to 0.364. Increasing the epochs did not improve predictive performance on this held-out split.
+
 ---
 
 ## How I Used AI
