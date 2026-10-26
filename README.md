@@ -42,6 +42,7 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
+This project builds a text classifier for posts from the MakeMKV forums, especially discussions about UHD-capable optical drives, firmware flashing, and disc-reading problems. It sorts each substantive post into `question`, `advice`, `report`, or `opinion`. The goal is to make a useful first pass over forum conversations by separating requests for help from troubleshooting guidance, personal experiences, and general claims. Posts containing only thanks, ads, bumps, or pasted drive information are excluded.
 
 
 ---
@@ -98,8 +99,7 @@
 
 **Which two labels:** `advice` and `report`
 
-**The decision rule I used every time:** If the post tells the reader to do
-something, it's `advice`, even if it also describes what happened to the writer. If it only describes what happened and asks and recommends nothing, it's `report`.
+**The decision rule I used every time:** If the post tells the reader to do something, it's `advice`, even if it also describes what happened to the writer. If it only describes what happened and asks and recommends nothing, it's `report`.
 
 A second rule: label a post `question` when its main purpose is to obtain information or help from the reader. A diagnostic question inside a reply is not enough by itself to make the post `question`; if the main purpose is to tell the reader what to do, label it `advice`.
 
@@ -107,10 +107,7 @@ A third rule: a plain statement about a drive, vendor or the market, with no eve
 
 ### Posts that get no label
 
-Posts with no question, claim, event or recommendation are skipped and not put in `labels.csv`. That covers thanks with nothing else, "PM sent.", bumps, ads, and posts that are
-only a pasted drive readout. If a post has a readout plus real text, I keep the
-text and delete the readout. I counted the skipped posts so I can report them in
-The Dataset.
+Posts with no question, claim, event or recommendation are skipped and not put in `labels.csv`. That covers thanks with nothing else, "PM sent.", bumps, ads, and posts that are only a pasted drive readout. If a post has a readout plus real text, I keep the text and delete the readout. I counted the skipped posts so I can report them in The Dataset.
 
 ---
 
@@ -149,8 +146,7 @@ For 20 posts I labeled them cold, then had claude check them over against my rul
 > `report` or `opinion`
 >
 > *I chose `opinion`, because:*
-> It states a claim about a drive, not an event in the writer's experience.
-> Nothing in the post says the writer tried it.
+> It states a claim about a drive, not an event in the writer's experience. Nothing in the post says the writer tried it.
 
 **2. (second rule: question vs. advice)**
 > *The post:*
@@ -179,16 +175,21 @@ For 20 posts I labeled them cold, then had claude check them over against my rul
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
 **Base model:**
+`distilbert-base-uncased`
 
 **Settings:** <!-- epochs, learning rate, batch size, seed -->
+3 epochs, learning rate `2e-5`, batch size `16`, seed `42`, and maximum sequence length `128`.
+
+**Hardware:**
+Training ran on an NVIDIA GeForce RTX 3070 Laptop GPU using CUDA and PyTorch 2.6.0+cu124.
 
 **Anything I changed from the defaults, and why:**
+I did not change the notebook's training defaults. I finalized the dataset at 220 labelled posts after reviewing the labels and removing five skip-only posts.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
-
-
+Using seed 42, the split is 154 train / 33 validation / 33 test. The test split contains `advice` 9, `opinion` 6, `question` 10, and `report` 8. `opinion` has only 6 test examples, so its F1 may vary substantially across seeds.
 
 ---
 
@@ -204,16 +205,23 @@ of next unit's variance. -->
 **Moment 1**
 
 - *What I asked for:*
+Asked Claude to pre-label the remaining unlabeled posts in raw_posts.csv using the label definitions and decision rules in this README.
 - *What came back:*
+  Proposed labels of `question`, `opinion`, `advice`, or `report`, along with `SKIP` flags for posts containing only thanks, ads, bumps, or pasted drive information. Ten posts had already been set aside in `fresh_test_posts.csv` for later testing, so they were kept separate from the 220 labeled training posts.
 - *What I changed:*
+  I reviewed the suggestions against my decision rules instead of accepting them automatically. I corrected labels where the post's main purpose was different, removed five skip-only posts from `labels.csv`, and kept 220 labeled posts for training. I also marked technically debatable examples as hard cases for later discussion.
 
 **Moment 2**
 
 - *What I asked for:*
+Reconsider replies that begin with a diagnostic question but then give troubleshooting instructions.
 - *What came back:*
+The question-versus-advice boundary should use the post's main purpose: a diagnostic question inside an instructional reply does not automatically make the post `question`.
 - *What I changed:*
+I updated the rule in this README and classified instruction-focused support replies as `advice` while keeping genuine information requests as `question`.
 
 **Pre-labelling disclosure:**
+I labelled 20 posts cold first and used Claude to check them. Claude pre-labelled the remaining posts; I reviewed the labels against my written rules and corrected the disagreements before training.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
