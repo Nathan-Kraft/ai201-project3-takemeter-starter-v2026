@@ -101,10 +101,9 @@
 **The decision rule I used every time:** If the post tells the reader to do
 something, it's `advice`, even if it also describes what happened to the writer. If it only describes what happened and asks and recommends nothing, it's `report`.
 
-A second rule that always applies first: if the post asks for anything, it's `question`, however much of it describes what happened.
+A second rule: label a post `question` when its main purpose is to obtain information or help from the reader. A diagnostic question inside a reply is not enough by itself to make the post `question`; if the main purpose is to tell the reader what to do, label it `advice`.
 
 A third rule: a plain statement about a drive, vendor or the market, with no event from the writer's own experience, is `opinion`, even when it is probably true.
-
 
 ### Posts that get no label
 
@@ -112,8 +111,6 @@ Posts with no question, claim, event or recommendation are skipped and not put i
 only a pasted drive readout. If a post has a readout plus real text, I keep the
 text and delete the readout. I counted the skipped posts so I can report them in
 The Dataset.
-
-
 
 ---
 
@@ -123,20 +120,21 @@ The Dataset.
      cases. -->
 
 **Where the posts came from:**
-All the posts came from the MakeMKV forums. 
+All the posts came from the MakeMKV forums. Most posts are from subforms within the UHD drives subforum.
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
-For 20 posts I labeled them cold, then had claude check them over against my rules for a second opinion. I agreed with its changes after discussing them. For the rest of them I had claude run through and label them. 
+For 20 posts I labeled them cold, then had claude check them over against my rules for a second opinion. I agreed with its changes after discussing them. For the rest of them I had claude run through and label them.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `question` | 69 | 31.4% |
+| `advice` | 59 | 26.8% |
+| `report` | 54 | 24.5% |
+| `opinion` | 38 | 17.3% |
+| **Total** | **220** | **100%** |
 
 **Three hard cases**
 
