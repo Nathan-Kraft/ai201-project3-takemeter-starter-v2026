@@ -189,7 +189,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("--data", default="labels.csv", help="your labelled CSV")
+    parser.add_argument("--data", default="data/labels.csv", help="your labelled CSV")
     parser.add_argument("--definitions", default="label_definitions.txt",
                         help="your label definitions, one per line")
     parser.add_argument("--held-out", default="test_split.csv",

@@ -57,7 +57,7 @@ This project builds a text classifier for posts from the MakeMKV forums, especia
 
 ### `question`
 
-**Definition:** Asking for information or help of any kind.
+**Definition:** A request for information or help of any kind.
 
 **Example 1:**
 >“Hello [user], I have a spare Pioneer drive, is it possible to flash this for 4k?”
@@ -67,7 +67,7 @@ This project builds a text classifier for posts from the MakeMKV forums, especia
 
 ### `opinion`
 
-**Definition:** States a general claim about drives, vendors or the market, with little or no support.
+**Definition:** A general claim about drives, vendors or the market, with little or no support.
 
 **Example 1:**
 >“Crossflashing is not possible for this drive.”
@@ -77,7 +77,7 @@ This project builds a text classifier for posts from the MakeMKV forums, especia
 
 ### `advice`
 
-**Definition:** Tells someone what to do or not to do, as a single suggestion or as a series of steps.
+**Definition:** A suggestion telling someone what to do or not to do, as a single tip or a series of steps.
 
 **Example 1:**
 >“Do not use MakeMKV v2.0.0. Install v1.18.4 and yes, extract the files before running the flasher.”
@@ -87,7 +87,7 @@ This project builds a text classifier for posts from the MakeMKV forums, especia
 
 ### `report`
 
-**Definition:** Describes what happened to the writer, success or failure, without asking for anything.
+**Definition:** A description of what happened to the writer, success or failure, that does not ask for anything.
 
 **Example 1:**
 >“Worked flawlessly, thank you [user]!”
@@ -252,20 +252,39 @@ I labelled 20 posts cold first and used Claude to check them. Claude pre-labelle
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.485 | 0.455 | -0.030 |
+| Macro F1 | 0.366 | 0.310 | -0.056 |
+| F1 — `advice` | 0.480 | 0.714 | +0.234 |
+| F1 — `opinion` | 0.200 | 0.000 | -0.200 |
+| F1 — `question` | 0.783 | 0.526 | -0.256 |
+| F1 — `report` | 0.000 | 0.000 | +0.000 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
 
+I believe that my trained model will perform better on my dataset, I also believe that the f1 scores will be better overall.
+
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
 
+Whatever the training run did pushed the model toward a worse, more skewed prediction pattern than it started with. This isn't noise its a real regression that I ned to diagnose before trusting the trained model over the baseline.
 
+**Re-run with corrected baseline definitions:**
+
+While diagnosing this gap, I found that `label_definitions.txt`'s original wording didn't fit `baseline.py`'s hypothesis template (`"This post is {}."`), since the definitions were full verb-first sentences, which read as ungrammatical when slotted into that template, and one (`report`) was defined partly by a negation, which NLI models handle poorly. That's a flaw in the baseline's input, not a finding about my trained model, so I rewrote the definitions as grammatical noun phrases (now reflected in the Label Taxonomy above) and reran the baseline.
+
+| Measure | Baseline (corrected) | Trained | Difference |
+|---|---|---|---|
+| Overall accuracy | 0.515 | 0.455 | -0.060 |
+| Macro F1 | 0.418 | 0.310 | -0.108 |
+| F1 — `advice` | 0.560 | 0.714 | +0.154 |
+| F1 — `opinion` | 0.444 | 0.000 | -0.444 |
+| F1 — `question` | 0.667 | 0.526 | -0.141 |
+| F1 — `report` | 0.000 | 0.000 | +0.000 |
+
+Even with the fixed baseline, the conclusion is the same: training regressed macro F1 instead of improving it, and the trained model still scores 0.000 on both `opinion` and `report`. The corrected baseline shows the gap was overstated before, not that it was wrong in direction.
 
 ---
 

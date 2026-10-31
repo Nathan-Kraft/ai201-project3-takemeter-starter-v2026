@@ -56,10 +56,10 @@
     }
   },
   "confidence": {
-    "mean_when_right": 0.3239430785179138,
-    "mean_when_wrong": 0.3199518918991089,
+    "mean_when_right": 0.3476303219795227,
+    "mean_when_wrong": 0.3389703631401062,
     "accuracy_most_confident_third": 0.6363636363636364,
-    "accuracy_least_confident_third": 0.45454545454545453,
+    "accuracy_least_confident_third": 0.36363636363636365,
     "n_per_third": 11
   },
   "device": "cuda",

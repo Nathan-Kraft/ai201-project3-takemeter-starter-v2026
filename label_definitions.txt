@@ -5,8 +5,9 @@
 #
 # Delete the examples below and put yours in.
 
-question: Asking for information or help of any kind.
-opinion: States a general claim about drives, vendors or the market, with little or no support.
-advice: Tells someone what to do or not to do, as a single suggestion or as a series of steps.
-report: Describes what happened to the writer, success or failure, without asking for anything.
+question: A request for information or help of any kind
+opinion: A general claim about drives, vendors or the market, with little or no support
+advice: A suggestion telling someone what to do or not to do, as a single tip or a series of steps
+report: A description of what happened to the writer, success or failure, that does not ask for anything
+# report (experiment, negation removed, no change in results): A first-person account of something that happened to the writer, success or failure
 
