@@ -60,40 +60,40 @@ This project builds a text classifier for posts from the MakeMKV forums, especia
 **Definition:** A request for information or help of any kind.
 
 **Example 1:**
->“Hello [user], I have a spare Pioneer drive, is it possible to flash this for 4k?”
+>"Hello [user], I have a spare Pioneer drive, is it possible to flash this for 4k?"
 
 **Example 2:**
->“The buffalo burner has been discontinued. (Days before I bought one) What’s next?”
+>"The buffalo burner has been discontinued. (Days before I bought one) What's next?"
 
 ### `opinion`
 
 **Definition:** A general claim about drives, vendors or the market, with little or no support.
 
 **Example 1:**
->“Crossflashing is not possible for this drive.”
+>"Crossflashing is not possible for this drive."
 
 **Example 2:**
->“This is a great release, and we should all be glad someone released their software for free!”
+>"This is a great release, and we should all be glad someone released their software for free!"
 
 ### `advice`
 
 **Definition:** A suggestion telling someone what to do or not to do, as a single tip or a series of steps.
 
 **Example 1:**
->“Do not use MakeMKV v2.0.0. Install v1.18.4 and yes, extract the files before running the flasher.”
+>"Do not use MakeMKV v2.0.0. Install v1.18.4 and yes, extract the files before running the flasher."
 
 **Example 2:**
->“The important part is what your drive’s BIOS says about its software. If it was flashed recently, it may be locked out. That’s why posting your drive information is important.”
+>"The important part is what your drive's BIOS says about its software. If it was flashed recently, it may be locked out. That's why posting your drive information is important."
 
 ### `report`
 
 **Definition:** A description of what happened to the writer, success or failure, that does not ask for anything.
 
 **Example 1:**
->“Worked flawlessly, thank you [user]!”
+>"Worked flawlessly, thank you [user]!"
 
 **Example 2:**
->“Okay, I washed the disc with water mixed with dish soap and carefully cleaned it using a microfiber cloth, avoiding circular motions. Unfortunately, the PC still doesn’t recognize the disc.”
+>"Okay, I washed the disc with water mixed with dish soap and carefully cleaned it using a microfiber cloth, avoiding circular motions. Unfortunately, the PC still doesn't recognize the disc."
 
 ### The hardest boundary
 
@@ -127,8 +127,8 @@ For 20 posts I labeled them cold, then had claude check them over against my rul
 
 | Label | Count | Share |
 |---|---|---|
-| `question` | 69 | 31.4% |
-| `advice` | 59 | 26.8% |
+| `question` | 68 | 30.9% |
+| `advice` | 60 | 27.3% |
 | `report` | 54 | 24.5% |
 | `opinion` | 38 | 17.3% |
 | **Total** | **220** | **100%** |
@@ -156,7 +156,7 @@ For 20 posts I labeled them cold, then had claude check them over against my rul
 > `question` or `advice`
 >
 > *I chose `question`, because:*
-> I first labelled it `advice`, then changed it after checking my own rules. It asks the reader to do something for the writer, and my second rule says any ask makes it `question`. The flasher notice is a recommendation, but the ask comes first and the rule applies first.
+> I first labelled it `advice`, then changed it after checking my own rules. The post's main purpose is to get the reader to do something for the writer (back up and share their firmware), not to tell the reader what to do for themselves - that's a request for help, which is `question` by definition, not `advice`. The flasher notice is incidental context for the request, not a recommendation aimed at the reader.
 
 **3. (first rule: advice vs. report)**
 > *The post:*
@@ -277,11 +277,11 @@ While diagnosing this gap, I found that `label_definitions.txt`'s original wordi
 
 | Measure | Baseline (corrected) | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy | 0.515 | 0.455 | -0.060 |
-| Macro F1 | 0.418 | 0.310 | -0.108 |
-| F1 — `advice` | 0.560 | 0.714 | +0.154 |
+| Overall accuracy | 0.606 | 0.424 | -0.182 |
+| Macro F1 | 0.479 | 0.282 | -0.197 |
+| F1 — `advice` | 0.640 | 0.615 | -0.025 |
 | F1 — `opinion` | 0.444 | 0.000 | -0.444 |
-| F1 — `question` | 0.667 | 0.526 | -0.141 |
+| F1 — `question` | 0.833 | 0.513 | -0.321 |
 | F1 — `report` | 0.000 | 0.000 | +0.000 |
 
 Even with the fixed baseline, the conclusion is the same: training regressed macro F1 instead of improving it, and the trained model still scores 0.000 on both `opinion` and `report`. The corrected baseline shows the gap was overstated before, not that it was wrong in direction.
@@ -295,11 +295,11 @@ Even with the fixed baseline, the conclusion is the same: training regressed mac
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1. Balance | No label above 40% or below 10% of 220 | 17.3%-31.4% | 17.3%-31.4% | 17.3%-31.4% | MET |
-| 2. Per-label F1 | question/advice/report >=0.65, opinion >=0.50 | q 0.526, o 0.000, a 0.714, r 0.000 | q 0.526, o 0.000, a 0.429, r 0.000 | q 0.514, o 0.000, a 0.588, r 0.000 | MISS |
-| 3. Seed stability | Accuracy spread <=0.10 | 0.455 | 0.394 | 0.424 | MET (spread 0.061) |
-| 4. Fresh posts | >=8/10 correct | 5/10 | 5/10 | 5/10 | MISS |
-| 5. Overall accuracy | >=0.75 | 0.455 | 0.394 | 0.424 | MISS |
+| 1. Balance | No label above 40% or below 10% of 220 | 17.3%-30.9% | 17.3%-30.9% | 17.3%-30.9% | MET |
+| 2. Per-label F1 | question/advice/report >=0.65, opinion >=0.50 | q 0.513, o 0.000, a 0.615, r 0.000 | q 0.588, o 0.000, a 0.667, r 0.000 | q 0.606, o 0.000, a 0.842, r 0.000 | MISS |
+| 3. Seed stability | Accuracy spread <=0.10 | 0.424 | 0.485 | 0.545 | MISS (spread 0.121) |
+| 4. Fresh posts | >=8/10 correct | 5/10 | 4/10 | 5/10 | MISS |
+| 5. Overall accuracy | >=0.75 | 0.424 | 0.485 | 0.545 | MISS |
 
 Row 1 is measured once on the full 220-post set, before any split - the
 value is the same across seeds by construction, not because it happened to
@@ -317,7 +317,7 @@ computed from those, not a separate measurement.
 |---|---|---|---|---|
 | **question** | 10 | 0 | 0 | 0 |
 | **opinion** | 6 | 0 | 0 | 0 |
-| **advice** | 4 | 0 | 5 | 0 |
+| **advice** | 5 | 0 | 4 | 0 |
 | **report** | 8 | 0 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
@@ -325,7 +325,7 @@ computed from those, not a separate measurement.
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
 
-8 real `report` posts were called `question`, and 0 real `question` posts were called `report` — the model didn't learn the report/advice/opinion boundaries at all, it just collapsed almost everything that wasn't `advice` into `question`.
+8 real `report` posts were called `question`, and 0 real `question` posts were called `report`. The model didn't learn the report/advice/opinion boundaries at all; it just collapsed almost everything that wasn't `advice` into `question`.
 
 ---
 
@@ -336,11 +336,11 @@ computed from those, not a separate measurement.
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Balance | No label above 40% or below 10% of 220 | MET | Counted labels.csv once: 17.3%-30.9% across the four labels, inside the range on both ends. |
+| 2 | Per-label F1 | question/advice/report >=0.65, opinion >=0.50, on every seed | MISS | opinion and report scored 0.000 F1 on all three seeds; that alone misses the target regardless of question/advice. |
+| 3 | Seed stability | Accuracy spread <=0.10 across seeds | MISS | Accuracies were 0.424, 0.485, 0.545; spread is 0.545-0.424 = 0.121, over the limit. |
+| 4 | Fresh posts | >=8/10 correct on every seed | MISS | Got 5/10, 4/10, and 5/10 across the three seeds, well short on all of them. |
+| 5 | Overall accuracy | >=0.75 on every seed | MISS | Accuracies were 0.424, 0.485, 0.545, all far below 0.75. |
 
 **Diagnoses**
 
@@ -353,7 +353,21 @@ computed from those, not a separate measurement.
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
 
+**Criterion 2 (per-label F1) - `opinion` and `report` both 0.000 across all three seeds:**
 
+Two different causes, not one. `opinion` is the smallest label (38/220) and the thinnest in the test split - only 6 examples on seed 42, below the ~8 I flagged as a risk when I set this split up. That little signal, with no distinguishing surface marker, isn't enough for the model to find what separates it from the rest.
+
+`report` is a different problem: it has 54 examples, more than `opinion`, so it isn't a count issue. The confusion matrix shows all 8 real `report` test posts predicted `question`, and 0 real `question` posts went the other way - a one-directional error, not noise. Checking the text directly: only 11% of `report` posts contain a "?", versus 77% of `question` posts. The model has a strong, learnable lexical cue for `question` and nothing comparable for `report`, so `report` and `question` collapse together on the one surface feature the model actually picked up. That's a genuinely hard label pair here, not a labeling mistake - I checked the question/advice boundary for exactly this kind of inconsistency (see Agreement Report) and found only one real offender in the whole dataset, now fixed, which didn't touch `report` at all.
+
+**Criterion 3 (seed stability) and Criterion 5 (overall accuracy):**
+
+Both trace back to the same collapse. The model learned two reliable cues - "?" for `question` and imperative phrasing for `advice`, the only two labels with non-zero F1 on any seed - and defaults to `question` for everything else. Since `opinion` and `report` are 42% of the dataset, that alone caps accuracy well under 0.75 regardless of seed. The seed-to-seed swing (0.424/0.485/0.545) comes from how much `advice` happens to benefit from this default behavior depending on which examples land in its small test slice (9 posts) each seed - `advice`'s F1 moved from 0.615 to 0.842 across seeds while `question` and the two zero labels barely moved at all.
+
+**Criterion 4 (fresh posts):**
+
+Same root cause as above, just measured on new posts: 5/10, 4/10, 5/10 correct is consistent with a model that only reliably recognizes `question` and `advice` and defaults to `question` otherwise, rather than something specific to the fresh set.
+
+**What the agreement report rules out:** 29/30 (96.7%) agreement on the staff set, with the one disagreement a rule I applied loosely rather than a gap or genuine ambiguity, argues against broad labeling inconsistency as the explanation for `opinion` and `report`'s zero F1. The one real inconsistency I found in my own 220 posts (the `question`/`advice` "any ask" contradiction) was narrow, isolated to a single post, and already corrected - it doesn't reach `report` or `opinion` at all.
 
 ---
 
@@ -365,7 +379,7 @@ computed from those, not a separate measurement.
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 29 / 30 = 96.7%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -390,22 +404,23 @@ computed from those, not a separate measurement.
 **1.**
 > *The post:*
 >
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
-
-**2.**
-> *The post:*
+> "The club championship scoring changed in 2019 from top-6 to top-10. Since then our B team has finished above the A team twice. That's not depth improving, it's the scoring rewarding turnout."
 >
 > *Staff said / I said:*
 >
+> Staff said `analysis`. I said `hot-take`.
+>
 > *My call, and why:*
 >
+> Staff is right. Rule 1 asks whether the fact is load-bearing or decoration. This post's conclusion ("it's the scoring rewarding turnout") rests entirely on the specific fact - the 2019 scoring change plus B team beating A team twice - remove that fact and there's no argument left. That matches the taxonomy's own worked example almost exactly: "Times are down 3% since 2017, and the shoe rule changed in 2017" is `analysis` because the number is the argument. I called it `hot-take`, because the "that's not X, it's Y" phrasing reads rhetorically like an opinion, which pulled me off the actual test the rule asks for.
+>
 > *Which pile:*
+>
+> (a) the rule covered it and I applied it loosely.
 
 **What the pattern in my disagreements tells me:**
+
+With only one disagreement out of 30, and that one a rule I applied loosely rather than a gap or genuine ambiguity, my general rule-following discipline looks solid on this exercise. But it's a narrow kind of inconsistency: I know the rule and can still get pulled off it by a post's rhetorical framing instead of testing the rule's actual criterion. That matters for my own 200 labels, where the same thing could happen on a boundary with stronger lexical pull - like "any ask" pulling toward `question` regardless of the main-purpose rule.
 
 
 
