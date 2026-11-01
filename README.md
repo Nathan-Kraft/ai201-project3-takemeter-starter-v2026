@@ -295,29 +295,37 @@ Even with the fixed baseline, the conclusion is the same: training regressed mac
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Balance | No label above 40% or below 10% of 220 | 17.3%-31.4% | 17.3%-31.4% | 17.3%-31.4% | MET |
+| 2. Per-label F1 | question/advice/report >=0.65, opinion >=0.50 | q 0.526, o 0.000, a 0.714, r 0.000 | q 0.526, o 0.000, a 0.429, r 0.000 | q 0.514, o 0.000, a 0.588, r 0.000 | MISS |
+| 3. Seed stability | Accuracy spread <=0.10 | 0.455 | 0.394 | 0.424 | MET (spread 0.061) |
+| 4. Fresh posts | >=8/10 correct | 5/10 | 5/10 | 5/10 | MISS |
+| 5. Overall accuracy | >=0.75 | 0.455 | 0.394 | 0.424 | MISS |
+
+Row 1 is measured once on the full 220-post set, before any split - the
+value is the same across seeds by construction, not because it happened to
+land that way.
+
+Row 3 reuses the same three accuracy numbers as row 5 - the spread is
+computed from those, not a separate measurement.
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
-|---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| true \ predicted | question | opinion | advice | report |
+|---|---|---|---|---|
+| **question** | 10 | 0 | 0 | 0 |
+| **opinion** | 6 | 0 | 0 | 0 |
+| **advice** | 4 | 0 | 5 | 0 |
+| **report** | 8 | 0 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
 
-
+8 real `report` posts were called `question`, and 0 real `question` posts were called `report` — the model didn't learn the report/advice/opinion boundaries at all, it just collapsed almost everything that wasn't `advice` into `question`.
 
 ---
 
