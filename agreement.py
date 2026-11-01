@@ -187,7 +187,7 @@ def main():
                         help="the staff labels, joined to the posts on `id`")
     parser.add_argument("--staff", default=None,
                         help="both in one file, if you already have it that way")
-    parser.add_argument("--mine", default="my_staff_labels.csv",
+    parser.add_argument("--mine", default="data/my_staff_labels.csv",
                         help="the same posts, labelled by you")
     parser.add_argument("--out", default="agreement_results.json")
     args = parser.parse_args()

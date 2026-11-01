@@ -1,0 +1,13 @@
+{
+  "compared": 30,
+  "agreed": 29,
+  "agreement_rate": 0.9666666666666667,
+  "disagreements": [
+    {
+      "text": "The club championship scoring changed in 2019 from top-6 to top-10. Since then our B team has finished above the A team twice. That's not depth improving, it's the scoring rewarding turnout.",
+      "staff": "analysis",
+      "mine": "hot_take"
+    }
+  ],
+  "staff_posts_not_in_mine": 0
+}
