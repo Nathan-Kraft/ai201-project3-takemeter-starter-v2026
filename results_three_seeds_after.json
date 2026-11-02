@@ -1,0 +1,224 @@
+[
+  {
+    "seed": 42,
+    "n_test": 38,
+    "accuracy": 0.631578947368421,
+    "f1_macro": 0.5975027870680043,
+    "per_label": {
+      "question": {
+        "precision": 0.6153846153846154,
+        "recall": 0.8,
+        "f1": 0.6956521739130435,
+        "support": 10
+      },
+      "opinion": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "support": 10
+      },
+      "advice": {
+        "precision": 0.5625,
+        "recall": 1.0,
+        "f1": 0.72,
+        "support": 9
+      },
+      "report": {
+        "precision": 0.5,
+        "recall": 0.2222222222222222,
+        "f1": 0.3076923076923077,
+        "support": 9
+      }
+    },
+    "confusion": {
+      "question": {
+        "question": 8,
+        "opinion": 0,
+        "advice": 0,
+        "report": 2
+      },
+      "opinion": {
+        "question": 1,
+        "opinion": 5,
+        "advice": 4,
+        "report": 0
+      },
+      "advice": {
+        "question": 0,
+        "opinion": 0,
+        "advice": 9,
+        "report": 0
+      },
+      "report": {
+        "question": 4,
+        "opinion": 0,
+        "advice": 3,
+        "report": 2
+      }
+    },
+    "confidence": {
+      "mean_when_right": 0.2950470447540283,
+      "mean_when_wrong": 0.2925073802471161,
+      "accuracy_most_confident_third": 0.6666666666666666,
+      "accuracy_least_confident_third": 0.5833333333333334,
+      "n_per_third": 12
+    },
+    "fresh_test": {
+      "n": 10,
+      "n_correct": 8,
+      "accuracy": 0.8
+    },
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.6.0+cu124",
+    "max_length": 128
+  },
+  {
+    "seed": 7,
+    "n_test": 38,
+    "accuracy": 0.5526315789473685,
+    "f1_macro": 0.4825310559006211,
+    "per_label": {
+      "question": {
+        "precision": 0.4444444444444444,
+        "recall": 0.8,
+        "f1": 0.5714285714285714,
+        "support": 10
+      },
+      "opinion": {
+        "precision": 1.0,
+        "recall": 0.6,
+        "f1": 0.75,
+        "support": 10
+      },
+      "advice": {
+        "precision": 0.5,
+        "recall": 0.7777777777777778,
+        "f1": 0.6086956521739131,
+        "support": 9
+      },
+      "report": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 9
+      }
+    },
+    "confusion": {
+      "question": {
+        "question": 8,
+        "opinion": 0,
+        "advice": 2,
+        "report": 0
+      },
+      "opinion": {
+        "question": 1,
+        "opinion": 6,
+        "advice": 3,
+        "report": 0
+      },
+      "advice": {
+        "question": 2,
+        "opinion": 0,
+        "advice": 7,
+        "report": 0
+      },
+      "report": {
+        "question": 7,
+        "opinion": 0,
+        "advice": 2,
+        "report": 0
+      }
+    },
+    "confidence": {
+      "mean_when_right": 0.30535799264907837,
+      "mean_when_wrong": 0.2791966497898102,
+      "accuracy_most_confident_third": 0.9166666666666666,
+      "accuracy_least_confident_third": 0.25,
+      "n_per_third": 12
+    },
+    "fresh_test": {
+      "n": 10,
+      "n_correct": 5,
+      "accuracy": 0.5
+    },
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.6.0+cu124",
+    "max_length": 128
+  },
+  {
+    "seed": 2024,
+    "n_test": 38,
+    "accuracy": 0.5789473684210527,
+    "f1_macro": 0.48638888888888887,
+    "per_label": {
+      "question": {
+        "precision": 0.5333333333333333,
+        "recall": 0.8,
+        "f1": 0.64,
+        "support": 10
+      },
+      "opinion": {
+        "precision": 0.625,
+        "recall": 0.5,
+        "f1": 0.5555555555555556,
+        "support": 10
+      },
+      "advice": {
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.75,
+        "support": 9
+      },
+      "report": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 9
+      }
+    },
+    "confusion": {
+      "question": {
+        "question": 8,
+        "opinion": 0,
+        "advice": 2,
+        "report": 0
+      },
+      "opinion": {
+        "question": 3,
+        "opinion": 5,
+        "advice": 2,
+        "report": 0
+      },
+      "advice": {
+        "question": 0,
+        "opinion": 0,
+        "advice": 9,
+        "report": 0
+      },
+      "report": {
+        "question": 4,
+        "opinion": 3,
+        "advice": 2,
+        "report": 0
+      }
+    },
+    "confidence": {
+      "mean_when_right": 0.32146039605140686,
+      "mean_when_wrong": 0.2870885133743286,
+      "accuracy_most_confident_third": 0.9166666666666666,
+      "accuracy_least_confident_third": 0.3333333333333333,
+      "n_per_third": 12
+    },
+    "fresh_test": {
+      "n": 10,
+      "n_correct": 5,
+      "accuracy": 0.5
+    },
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.6.0+cu124",
+    "max_length": 128
+  }
+]

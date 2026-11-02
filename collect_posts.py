@@ -95,6 +95,22 @@ USERNAMES = [
     "Mr.Penguin", "blackened2857", "asmcoms", "agent_x007", "RibShark",
     "Voxelium", "boguslecina", "DennisOlof", "Chris Kelly",
     "jibanyanlnewells", "macdev", "F1nkNasty", "vtedogs", "Andyyy1",
+    "Bailzer01", "Eze2kiel", "fs9178", "GmanEst72", "HSH1979",
+    "infectedrain", "jabberwokki", "jeepsey", "jobj42", "johnnyflashy",
+    "keydb_helper", "kill3r", "kraath", "malevolus", "mattjackson86",
+    "musashiwrx", "mystralix", "nicksnax", "Parallax Abstraction",
+    "Sayaka", "skimige", "skippdg01", "SneakyGit", "Stingray",
+    "thaelis", "tomty89", "Woodstock",
+    "BDR_UD03", "Blu-Shield", "hansolo", "barnstarmer", "cxplay",
+    "Mucio", "PapaReese", "wtof_", "sedzik", "QuestionAsker",
+    "ccateni", "SamuriHL", "trdtac", "babayaga", "Bowi_QC",
+    "microfast", "OneDay", "SamSpeexy", "Wildcard", "aas88keyz",
+    "dhiragoni", "blind-s33r", "BlorgBlorgBlorg",
+    "bimbi", "A.RABID.BUFFALO", "Casper2209", "larhaus", "Samus_Aran",
+    "Razer82", "georgesgiralt", "tommik128", "RabidWookie", "aaddegraaf",
+    "johannu", "kelalo",
+    "Batman&throbbin", "Finray", "frodobagginz", "najeeb", "phantom0308",
+    "Timeless", "VirtualStudio", "bartelsjoshuac", "amhome",
 ]
 PLACEHOLDER = "[user]"
 

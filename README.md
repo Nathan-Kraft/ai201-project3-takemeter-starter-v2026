@@ -430,22 +430,34 @@ With only one disagreement out of 30, and that one a rule I applied loosely rath
 
 **What I changed:**
 
+Added opinion-labeled examples sourced from new MakeMKV forum posts, raising `opinion` from 38 to 65 of the 248 rows in `labels.csv`. No training settings or other label boundaries were changed.
+
 **Which diagnosis pointed at it:**
+
+Criterion 2's diagnosis for `opinion`'s 0.000 F1: it was the smallest label (38/220, only 6 in the seed-42 test split) with no distinguishing surface marker, so there wasn't enough signal for the model to learn it - a too-few-examples problem, not a labeling inconsistency (the agreement report ruled that out).
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Balance | No label above 40% or below 10% of 220 | 23.0%-26.2% | 23.0%-26.2% | 23.0%-26.2% | MET |
+| 2. Per-label F1 | question/advice/report >=0.65, opinion >=0.50 | q 0.696, o 0.667, a 0.720, r 0.308 | q 0.571, o 0.750, a 0.609, r 0.000 | q 0.640, o 0.556, a 0.750, r 0.000 | MISS |
+| 3. Seed stability | Accuracy spread <=0.10 | 0.632 | 0.553 | 0.579 | MET (spread 0.079) |
+| 4. Fresh posts | >=8/10 correct | 8/10 | 5/10 | 5/10 | MISS |
+| 5. Overall accuracy | >=0.75 | 0.632 | 0.553 | 0.579 | MISS |
+
+Row 1 is measured on the full 248-post `labels.csv` now in place (up from 220
+when the before-run criterion was set) - the 10%-40% bounds are unchanged,
+only the post count grew.
 
 **Did it help, and how do I know:**
 
 <!-- If it didn't, say so. Relabelling that didn't help is a genuinely
      interesting result and earns full credit. -->
+
+Yes, for what it targeted. `opinion`'s F1 went from 0.000 on all three seeds to 0.667, 0.750, and 0.556 - clearing its own 0.50 target on every seed, something it missed by the maximum possible margin before. Seed stability also improved as a side effect (spread 0.121 -> 0.079, now MET) and overall accuracy rose on every seed (0.42-0.55 before, 0.55-0.63 after).
+
+Criterion 2 as a whole is still a MISS, but for a different reason now: `question` and `report`, not `opinion`, are the labels missing their 0.65 bar (`report` drops to 0.000 on two of three seeds). That matches the diagnosis I already had for `report` - a genuinely hard boundary with `question`, not a low-example problem - so adding opinion examples wasn't expected to fix it, and it didn't. Fresh-post accuracy and overall accuracy are both still short of target for the same reason.
 
 
 
