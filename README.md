@@ -484,6 +484,8 @@ What I'd do: add `report` examples that still lack a "?", or weight the loss aga
 
 Why I stopped: ran out of time - this milestone's scope was the one opinion fix.
 
+Update: I tried exactly this as the stretch improvement below - `report`'s F1 improved on all three seeds, though it's still a MISS on two of them, and it came with a new `opinion` regression on seed 7. See A Second Measured Improvement.
+
 **Criterion 4 (fresh posts) and Criterion 5 (overall accuracy):**
 
 Both downstream of the same collapse, not separate problems. Fresh posts: 8/10 on seed 42, 5/10 on the other two - swings with how many of the test split's `report` posts happen to lack the "?" cue. Overall accuracy (0.632/0.553/0.579) stays under 0.75 for the same reason at larger scale.
@@ -491,6 +493,8 @@ Both downstream of the same collapse, not separate problems. Fresh posts: 8/10 o
 What I'd do: same fix as Criterion 2 - if `report`'s F1 moves, these should move with it.
 
 Why I stopped: same - no time to retrain and re-diagnose past the one change this milestone.
+
+Update: both moved in the stretch run too - fresh posts improved on all three seeds, overall accuracy only ticked up on seed 42. Still short of target; see A Second Measured Improvement.
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
@@ -517,6 +521,22 @@ Reading the seed-42 misses, the "?" theory only explains one of the four `report
 ### A Second Measured Improvement
 
 **Stretch: A second measured improvement** - I'll add new `report` training examples written with the hedging/casual tone and first-person fix-narration patterns the per-label write-up found (rather than loss class-weighting), retrain across the three after-run seeds, and report whether `report`'s F1 improves.
+
+### Run Log — Stretch
+
+| Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
+|---|---|---|---|---|---|
+| 1. Balance | No label above 40% or below 10% of 252 | 24.2%-25.8% | 24.2%-25.8% | 24.2%-25.8% | MET |
+| 2. Per-label F1 | question/advice/report >=0.65, opinion >=0.50 | q 0.737, o 0.625, a 0.696, r 0.556 | q 0.667, o 0.182, a 0.500, r 0.727 | q 0.615, o 0.533, a 0.696, r 0.333 | MISS |
+| 3. Seed stability | Accuracy spread <=0.10 | 0.658 | 0.553 | 0.579 | MISS (spread 0.105) |
+| 4. Fresh posts | >=8/10 correct | 9/10 | 6/10 | 7/10 | MISS |
+| 5. Overall accuracy | >=0.75 | 0.658 | 0.553 | 0.579 | MISS |
+
+Row 1 is measured on the full 252-post `labels.csv` now in place (up from 248 after the opinion fix) - bounds are unchanged, only the post count grew.
+
+**Did it help, and how do I know:**
+
+Yes, for what it targeted, but not for free. `report`'s F1 went from 0.308/0.000/0.000 to 0.556/0.727/0.333 - a real improvement on all three seeds, even though two still miss the 0.65 bar. Fresh-post accuracy improved too (8/10, 5/10, 5/10 -> 9/10, 6/10, 7/10). But seed 7's `opinion` F1 collapsed from 0.750 to 0.182, with 8 of 10 test posts called `advice` instead. I checked: it's the same 10 test posts both times, not a different split, so this is a real effect of retraining with three more `report` rows in the training set - on a dataset this small, a few new examples of one label can shift the decision boundary for a completely different pair. Several of the newly-misclassified `opinion` posts were already borderline, written as hedged recommendations ("Don't think it is any better," "We will do this..."), so the fix didn't create a new problem so much as expose one that was already close to the line.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 

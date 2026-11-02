@@ -246,4 +246,8 @@ They switched to BU40N's almost 2 years ago. It's almost a certainty that all of
 I don't think this will ever be able to read UHD discs even if you can enable libredrive.,opinion,ai-prelabeled
 "It has no equivalent in Pioneer's retail lineup. This drive was most likely developed specifically for Seiko Corp. (Epson). Technically, it uses hardware very similar to the Pioneer BDR‑209/S09 - the same ONP‑8342A mainboard and the Renesas R8J32740FP42 chipset. The only differences are OPU and different firmware. It writes DVD and CD media, while Blu‑ray discs are read‑only (it's combo drive). Pioneer designated the hardware as SAT8680. There's nothing you can do with it in terms of UHD support / BD writing.",opinion,ai-prelabeled
 "This thread has not aged well. As of today, all BDW/BDE drives can be crossflashed using modified kernel and firmware files. The BDE-PR1EP3 remains untested.",opinion,ai-prelabeled
+I had email contact with [user] and I have got the flasher tool for my drive. I flashed the drive und now it can read UHD-discs. Everything is working without problems now.,report,ai-prelabeled
+just posting to confirm i tested this and it works,report,ai-prelabeled
+I completely understand! Actually i did flash my ad07 with firmware from the updater.exe - worked just fine,report,ai-prelabeled
+I was able to get it flashed with a third party enclosure. However when it was reassembled I found that even though MakeMKV was able to see it as patched. When it tried to rip a UHD of a known good disc it would say aacs unknown and create a dump of the disc. Not sure if the chip has something to do with it.,report,ai-prelabeled
 This one is based on the BDR-206 platform. It's not worth doing anything with it.,opinion,ai-prelabeled
