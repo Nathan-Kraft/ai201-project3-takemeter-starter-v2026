@@ -498,6 +498,20 @@ learned:**
 
 I meant `report` to be identified by purpose - describing an outcome, asking for nothing - but the model is still reading it mostly by the one surface cue it found, since `question` posts usually contain a "?" and `report` posts usually don't. Across the three after-run seeds, 4 to 7 of the 9 real `report` test posts were predicted `question` each time, while almost no `question` posts were mistaken for `report` - a one-directional error that confirms the model learned a lexical shortcut for `question`, not the purpose-based distinction my taxonomy actually draws.
 
+---
+
+## Stretch Features
+
+**Stretch: Confidence check** - I'll report whether the model's confident predictions are right more often than its unsure ones, using the `confidence` data already in `results_three_seeds_after.json` (mean confidence when right vs. wrong, accuracy on the most- vs. least-confident third) across the three after-run seeds.
+
+### Per-label error write-up
+
+**Stretch: Per-label error write-up** - I'll analyze `report`, the worst-performing label (F1 0.308, 0.000, 0.000 across the three after-run seeds), using the confusion matrices already in `results_three_seeds_after.json` to confirm it's confused with `question`, then read the actual misclassified `report` posts to describe what they have in common.
+
+### A Second Measured Improvement
+
+
+
 <!-- ═════════════════════════════════════════════════════════════════════
 
      SUBMISSION CHECKLIST — unit 5
