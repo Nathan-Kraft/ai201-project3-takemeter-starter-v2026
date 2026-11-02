@@ -502,15 +502,21 @@ I meant `report` to be identified by purpose - describing an outcome, asking for
 
 ## Stretch Features
 
+### Confidence check
+
 **Stretch: Confidence check** - I'll report whether the model's confident predictions are right more often than its unsure ones, using the `confidence` data already in `results_three_seeds_after.json` (mean confidence when right vs. wrong, accuracy on the most- vs. least-confident third) across the three after-run seeds.
+
+Yes, but the gap shows up more in accuracy by confidence tier than in the raw confidence numbers themselves. Mean confidence when right (0.307 average across seeds) and when wrong (0.286 average) are close, so the model doesn't clearly "know" when it's guessing. But accuracy on the most-confident third of predictions (0.83 average) is much higher than on the least-confident third (0.39 average) - so confidence still ranks predictions usefully even though its absolute values don't separate right from wrong by much.
 
 ### Per-label error write-up
 
 **Stretch: Per-label error write-up** - I'll analyze `report`, the worst-performing label (F1 0.308, 0.000, 0.000 across the three after-run seeds), using the confusion matrices already in `results_three_seeds_after.json` to confirm it's confused with `question`, then read the actual misclassified `report` posts to describe what they have in common.
 
+Reading the seed-42 misses, the "?" theory only explains one of the four `report`→`question` mistakes - the other three have no question mark at all, just hedging or casual phrasing ("I'm not sure if...", "if for some reason I may need it," a one-line "Thx... Thank you!"). So the model seems to be picking up on uncertain or casual tone generally, not just punctuation. The three `report`→`advice` misses are different: each one narrates a fix in first person - "I replaced the drive and it worked," a step-by-step "How It Works" writeup - which reads a lot like my `advice` posts even though the writer is just describing what they did, not telling someone else to do it. Same root problem either way: `report` is supposed to be about purpose, but its posts borrow sentence patterns from the labels around it.
+
 ### A Second Measured Improvement
 
-
+**Stretch: A second measured improvement** - I'll add new `report` training examples written with the hedging/casual tone and first-person fix-narration patterns the per-label write-up found (rather than loss class-weighting), retrain across the three after-run seeds, and report whether `report`'s F1 improves.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
