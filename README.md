@@ -238,6 +238,15 @@ I updated the rule in this README and classified instruction-focused support rep
 **Pre-labelling disclosure:**
 I labelled 20 posts cold first and used Claude to check them. Claude pre-labelled the remaining posts; I reviewed the labels against my written rules and corrected the disagreements before training.
 
+**Moment 3**
+
+- *What I asked for:*
+Help figure out why `baseline.py`'s accuracy with `label_definitions.txt` loaded looked worse than expected.
+- *What came back:*
+The original definitions were full verb-first sentences that didn't fit the hypothesis template (`"This post is {}."`), and the `report` definition was built on a negation, which NLI models handle poorly.
+- *What I changed:*
+Reworded `question`, `opinion`, and `advice` for grammar only, with no change in meaning. Kept the negation in `report`'s definition, since it's the exact clause my hardest-boundary rule depends on, after testing a negation-free version and finding it produced identical results. Updated the Label Taxonomy definitions above to match.
+
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
      Don't fill these in during unit 5.
@@ -467,13 +476,27 @@ Criterion 2 as a whole is still a MISS, but for a different reason now: `questio
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
 
+**Criterion 2 (per-label F1) - `question` and `report` still miss 0.65:**
 
+`report` is worst: F1 is 0.308, 0.000, 0.000 across seeds. Same one-directional error as the before run, just not fully fixed: 4, 7, and 4 of 9 real `report` posts were predicted `question` each seed, almost none the other way. The cause already diagnosed holds: `question` posts usually have a "?", `report` posts usually don't, and the model leans on that cue instead of purpose. `question` itself misses 0.65 on two seeds for the same reason in reverse.
+
+What I'd do: add `report` examples that still lack a "?", or weight the loss against the `report`->`question` error.
+
+Why I stopped: ran out of time - this milestone's scope was the one opinion fix.
+
+**Criterion 4 (fresh posts) and Criterion 5 (overall accuracy):**
+
+Both downstream of the same collapse, not separate problems. Fresh posts: 8/10 on seed 42, 5/10 on the other two - swings with how many of the test split's `report` posts happen to lack the "?" cue. Overall accuracy (0.632/0.553/0.579) stays under 0.75 for the same reason at larger scale.
+
+What I'd do: same fix as Criterion 2 - if `report`'s F1 moves, these should move with it.
+
+Why I stopped: same - no time to retrain and re-diagnose past the one change this milestone.
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
 <!-- Two sentences. Your confusion matrix is the evidence. -->
 
-
+I meant `report` to be identified by purpose - describing an outcome, asking for nothing - but the model is still reading it mostly by the one surface cue it found, since `question` posts usually contain a "?" and `report` posts usually don't. Across the three after-run seeds, 4 to 7 of the 9 real `report` test posts were predicted `question` each time, while almost no `question` posts were mistaken for `report` - a one-directional error that confirms the model learned a lexical shortcut for `question`, not the purpose-based distinction my taxonomy actually draws.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
