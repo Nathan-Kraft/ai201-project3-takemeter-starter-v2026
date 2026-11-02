@@ -322,6 +322,8 @@ computed from those, not a separate measurement.
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
+**Device:** cuda (NVIDIA GeForce RTX 3070 Laptop GPU)
+
 | true \ predicted | question | opinion | advice | report |
 |---|---|---|---|---|
 | **question** | 10 | 0 | 0 | 0 |
@@ -447,6 +449,8 @@ Criterion 2's diagnosis for `opinion`'s 0.000 F1: it was the smallest label (38/
 
 ### Run Log — After
 
+**Device:** cuda (NVIDIA GeForce RTX 3070 Laptop GPU)
+
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
 | 1. Balance | No label above 40% or below 10% of 220 | 23.0%-26.2% | 23.0%-26.2% | 23.0%-26.2% | MET |
@@ -523,6 +527,8 @@ Reading the seed-42 misses, the "?" theory only explains one of the four `report
 **Stretch: A second measured improvement** - I'll add new `report` training examples written with the hedging/casual tone and first-person fix-narration patterns the per-label write-up found (rather than loss class-weighting), retrain across the three after-run seeds, and report whether `report`'s F1 improves.
 
 ### Run Log — Stretch
+
+**Device:** cuda (NVIDIA GeForce RTX 3070 Laptop GPU)
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
